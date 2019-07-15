@@ -5,8 +5,8 @@
   "author": "Segawa Akira",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production --progress ",
-    "start": "concurrently \"npm run imagemin:watch\" \"webpack-dev-server --mode development --inline --open\"",
+    "build": "NODE_ENV=production webpack --mode production --progress ",
+    "start": "NODE_ENV=development concurrently \"npm run imagemin:watch\" \"webpack-dev-server --mode development --inline --open\"",
     "imagemin:build": "node imagemin.js",
     "imagemin:watch": "onchange './src/images' -e '**/*.DS_Store' -- npm run imagemin:build"
   },

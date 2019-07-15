@@ -10,6 +10,7 @@ const SRC = './src'
 const DEST = './public'
 const HOST = process.env.HOST || '0.0.0.0'
 const PORT = process.env.PORT || 3000
+const enabledSourceMap = process.env.NODE_ENV === "development";
 
 const constants = readConfig(`${SRC}/constants.yml`)
 const { BASE_DIR } = constants
@@ -29,6 +30,7 @@ const htmlTemplates = routeDataMapper({
 })
 
 module.exports = {
+    devtool: 'source-map',//ソースマップツールを有効
     // エントリーファイル
     entry: {
         'js/script.js': `${SRC}/js/script.js`,
@@ -78,13 +80,18 @@ module.exports = {
                         {
                             loader: 'css-loader',
                             options: {
+                                // オプションでCSS内のurl()メソッドの取り込みを禁止する
+                                // url: false,
+                                // ソースマップを有効にする
+                                sourceMap: enabledSourceMap,
                                 importLoaders: 2,
                             }
                         },
-                        'postcss-loader',
+//                        'postcss-loader',
                         {
                             loader: 'sass-loader',
                             options: {
+                                sourceMap: enabledSourceMap,
                                 includePaths: [ `${SRC}/scss` ],
                             },
                         }
